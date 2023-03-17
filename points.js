@@ -13,7 +13,6 @@ module.exports = {
     //use regex to get only alphanumeric chars--if too complex make a function
     if (receipt.retailer != null) {
       var clean = (receipt.retailer).replace(/[^0-9A-Z]+/gi, "");
-      // console.log(clean, "alphanumeric", clean.length);
       points += clean.length
     }
     else {
@@ -25,19 +24,16 @@ module.exports = {
       if (isNaN(total)){
         return -1
       }
-      // console.log(total);
       var n = Number(Math.floor(total))
       var num = total - n
       var result = Math.round((num + Number.EPSILON) * 100) / 100
 
       if (result == 0) {
-        // console.log("no cents", 50);
         points += 50
       }
 
       // 25 points if the total is a multiple of 0.25.
       if ((result * 100) % 25 == 0) {
-        // console.log("multiple of 0.25", 25);
         points += 25
       }
     }
@@ -51,7 +47,6 @@ module.exports = {
     // 5 points for every two items on the receipt.
     if (receipt.items != null) {
       let num_items = (receipt.items.length)
-      // console.log("5 for 2", 5 * (num_items / 2 >> 0));
       points += 5 * (num_items / 2 >> 0);
     }
     else {
@@ -64,8 +59,6 @@ module.exports = {
       for (let i = 0; i < items.length; i++) {
         let description = (items[i].shortDescription).trim();
         if (description.length % 3 == 0) {
-
-          // console.log("trimmed", (Math.ceil((items[i].price * 2) / 10)));
           points += (Math.ceil((items[i].price * 2) / 10))
         }
 
@@ -86,7 +79,6 @@ module.exports = {
         return -1
       }
       if (day % 2 != 0) {
-        // console.log("Date", 6);
         points += 6
       }
     }
@@ -98,12 +90,10 @@ module.exports = {
     if (receipt.purchaseTime != "") {
       let purchase_time = receipt.purchaseTime
       let time =parseInt(purchase_time.substring(0, 2))
-      // console.log(time);
       if (isNaN(time)){
         return -1
       }
       if (time >= 14 && time < 16) {
-        // console.log("Time", 10);
         points += 10
       }
     }
